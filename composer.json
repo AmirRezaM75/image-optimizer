@@ -1,0 +1,41 @@
+{
+    "name": "amirrezam75/image-optimizer",
+    "description": "Easily optimize images using PHP",
+    "keywords": [
+        "image-optimizer"
+    ],
+    "homepage": "https://github.com/amirrezam75/image-optimizer",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amir Reza Mehrbakhsh",
+            "email": "amirrezax@hotmail.com",
+            "homepage": "https://amirrezam75.ir",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2|^8.0",
+        "ext-fileinfo": "*",
+        "symfony/process": "^4.2|^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AmirRezaM75\\ImageOptimizer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AmirRezaM75\\ImageOptimizer\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
