@@ -2,6 +2,8 @@
 
 namespace AmirRezaM75\ImageOptimizer;
 
+use InvalidArgumentException;
+
 class Image
 {
     protected $imagePath;
@@ -9,7 +11,7 @@ class Image
     public function __construct($imagePath)
     {
         if (! file_exists($imagePath))
-            throw new \InvalidArgumentException("{$imagePath} doesn't exits");
+            throw new InvalidArgumentException("{$imagePath} doesn't exits");
 
         $this->imagePath = $imagePath;
     }
