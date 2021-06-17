@@ -4,7 +4,9 @@
 namespace AmirRezaM75\ImageOptimizer\Optimizers;
 
 
-class BaseOptimizer
+use AmirRezaM75\ImageOptimizer\Optimizer;
+
+abstract class BaseOptimizer implements Optimizer
 {
     protected $options = [];
 
@@ -17,7 +19,7 @@ class BaseOptimizer
         $this->setOptions($options);
     }
 
-    public function setOptions($options)
+    public function setOptions(array $options = [])
     {
         $this->options = $options;
 
