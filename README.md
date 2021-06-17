@@ -5,14 +5,20 @@ composer require amirrezam75/image-optimizer
 ## Usage
 
 ```php
-(new OptimizerChain)
-    ->addOptimizer(new Gifsicle([
-        '-b',
-        '-O3',
-        '--lossy=100',
-        '-k=64'
-    ]))
-    ->optimize($inputPath, $outputPath);
+(new Image('animated.gif'))->optimize();
+```
+
+You may want to change output location:
+
+```php
+(new Image('animated.gif'))->optimize('output-path');
+```
+
+It uses gifsicle as default optimizer; if you need to use another command line utility to optimize your images just write your own optimizer.
+An optimizer is any class that implements the ``AmirRezaM75\ImageOptimizer\Optimizer`` interface.
+
+```php
+(new Image('animated.gif'))->optimize(null, Optimizer $optimizer);
 ```
 
 ## Optimization tools
