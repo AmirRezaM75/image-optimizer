@@ -42,3 +42,14 @@ Reduce the number of distinct colors in each output GIF to num or less. Num must
 ``./bootstrap.sh`` or ``autoreconf -i``
 
 ``make install``
+
+
+## Converter tools
+
+### FFMPEG
+
+#### [Options](https://ffmpeg.org/ffmpeg.html)
+``-r[:stream_specifier]`` Set frame rate (Hz value, fraction or abbreviation).
+
+``-c[:stream_specifier] codec (input/output,per-stream)`` or `` -codec``
+Select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. codec is the name of a decoder/encoder or a special value copy (output only) to indicate that the stream is not to be re-encoded.

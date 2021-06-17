@@ -2,6 +2,7 @@
 
 namespace AmirRezaM75\ImageOptimizer;
 
+use AmirRezaM75\ImageOptimizer\Converters\Webm;
 use AmirRezaM75\ImageOptimizer\Optimizers\Gifsicle;
 use InvalidArgumentException;
 use Symfony\Component\Process\Process;
@@ -48,6 +49,26 @@ class Image
 
         $process = Process::fromShellCommandline($optimizer->getCommand());
         $process->run();
+
+        return $this;
+    }
+
+    public function convert(Converter $converter)
+    {
+        $converter->setImagePath($this->path());
+
+        $process = Process::fromShellCommandline($converter->getCommand());
+        $process->run();
+    }
+
+    public function convertToWebm()
+    {
+        $this->convert(new Webm([
+            '-r 16',
+            '-c:v libvpx',
+            '-vf fps="fps=8"',
+            '-auto-alt-ref 0'
+        ]));
     }
 
     private function getOptimizer()

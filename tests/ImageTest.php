@@ -85,4 +85,14 @@ class ImageTest extends TestCase
         $this->assertFileEquals($tempFilePath, $this->getMediaPath('animated.gif'));
         $this->assertFileExists($outputPath);
     }
+
+    /** @test */
+    public function it_can_convert_gif_to_webm()
+    {
+        $tempFilePath = $this->getTempPath('animated.gif');
+
+        (new Image($tempFilePath))
+            ->optimize()
+            ->convertToWebm();
+    }
 }
