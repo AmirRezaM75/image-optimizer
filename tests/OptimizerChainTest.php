@@ -64,4 +64,18 @@ class OptimizerChainTest extends TestCase
 
         $this->assertEquals( file_get_contents($modifiedFilePath), file_get_contents($originalFilePath) );
     }
+
+    /** @test */
+    public function it_can_output_to_specified_path()
+    {
+        $tempFilePath = $this->getTempPath('animated.gif');
+        $outputPath = __DIR__ . '/temp/output.gif';
+
+        $this->optimizerChain
+            ->addOptimizer(new Gifsicle)
+            ->optimize($tempFilePath, $outputPath);
+
+        $this->assertFileEquals($tempFilePath, $this->getMediaPath('animated.gif'));
+        $this->assertFileExists($outputPath);
+    }
 }

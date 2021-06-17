@@ -23,8 +23,14 @@ class OptimizerChain
         return $this;
     }
 
-    public function optimize($imagePath)
+    public function optimize($imagePath, $outputPath = null)
     {
+        if ($outputPath) {
+            copy($imagePath, $outputPath);
+
+            $imagePath = $outputPath;
+        }
+
         $image = new Image($imagePath);
 
         foreach ($this->optimizers as $optimizer) {
