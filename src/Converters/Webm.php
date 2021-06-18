@@ -22,10 +22,10 @@ class Webm extends BaseConverter
         return "\"{$this->binaryPath}{$this->binaryName}\""
             . ' -i ' . escapeshellarg($this->imagePath)
             . " {$optionString} "
-            . escapeshellarg($this->getOutputName());
+            . escapeshellarg($this->getOutputPath());
     }
 
-    public function getOutputName()
+    public function getOutputPath()
     {
         return pathinfo($this->imagePath, PATHINFO_DIRNAME)
             . DIRECTORY_SEPARATOR

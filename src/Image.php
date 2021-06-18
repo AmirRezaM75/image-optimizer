@@ -59,6 +59,8 @@ class Image
 
         $process = Process::fromShellCommandline($converter->getCommand());
         $process->run();
+
+        return $converter->getOutputPath();
     }
 
     /**
@@ -69,7 +71,7 @@ class Image
     public function convertToWebm()
     {
         // ['-r 16', '-c:v libvpx', '-vf fps="fps=8"', '-auto-alt-ref 0']
-        $this->convert(new Webm([
+        return $this->convert(new Webm([
             '-qmin 10',
             '-qmax 40',
             '-c vp9',
