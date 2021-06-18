@@ -61,13 +61,22 @@ class Image
         $process->run();
     }
 
+    /**
+     * To install FFmpeg with support for libvpx-vp9,
+     * look at the Compilation Guides and compile FFmpeg with the --enable-libvpx option.
+     * @see https://trac.ffmpeg.org/wiki/Encode/VP9
+     */
     public function convertToWebm()
     {
+        // ['-r 16', '-c:v libvpx', '-vf fps="fps=8"', '-auto-alt-ref 0']
         $this->convert(new Webm([
-            '-r 16',
-            '-c:v libvpx',
-            '-vf fps="fps=8"',
-            '-auto-alt-ref 0'
+            '-qmin 10',
+            '-qmax 40',
+            '-c vp9',
+            '-b:v 0',
+            '-crf 40',
+            '-vf fps="fps=16"',
+            '-an'
         ]));
     }
 

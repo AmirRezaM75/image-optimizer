@@ -49,7 +49,18 @@ Reduce the number of distinct colors in each output GIF to num or less. Num must
 ### FFMPEG
 
 #### [Options](https://ffmpeg.org/ffmpeg.html)
+
+``-i`` Specifies the input file
+
 ``-r[:stream_specifier]`` Set frame rate (Hz value, fraction or abbreviation).
 
 ``-c[:stream_specifier] codec (input/output,per-stream)`` or `` -codec``
-Select an encoder (when used before an output file) or a decoder (when used before an input file) for one or more streams. codec is the name of a decoder/encoder or a special value copy (output only) to indicate that the stream is not to be re-encoded.
+Select an encoder or a decoder for one or more streams.
+
+**libvpx-vp9** is the VP9 video encoder for WebM
+
+``-crf`` values can go from 4 to 63. Lower values mean better quality.
+
+``-b:v`` is the maximum allowed bitrate. Higher means better quality.
+
+``-an`` disables audio
