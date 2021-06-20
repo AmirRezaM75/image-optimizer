@@ -38,6 +38,14 @@ Alter image colors to shrink output file size at the cost of artifacts and noise
 ``-k[=num], --colors[=num]``
 Reduce the number of distinct colors in each output GIF to num or less. Num must be between 2 and 256. This can be used to shrink output GIFs or eliminate any local color tables.
 
+``-o [file], --output [file]``
+Send output to file. The special filename ‘-’ means the standard output.
+
+``--color-method [method]``
+Determine how a smaller colormap is chosen. 
+- ‘**diversity**’, the default, is xv(1)’s diversity algorithm, which uses a strict subset of the existing colors and generally produces good results.
+- ‘**blend-diversity**’ is a modification of this: some color values are blended from groups of existing colors.
+- ‘**median-cut**’ is the median cut algorithm described by Heckbert.
 #### Installation
 ``./bootstrap.sh`` or ``autoreconf -i``
 

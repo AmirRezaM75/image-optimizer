@@ -89,8 +89,9 @@ class Image
                 return new Gifsicle([
                     '-b',
                     '-O3',
+                    '-k=150',
                     '--lossy=100',
-                    '-k=64'
+                    '--color-method=median-cut'
                 ]);
             default: return false;
         }
