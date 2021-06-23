@@ -5,11 +5,13 @@ namespace AmirRezaM75\ImageOptimizer;
 use AmirRezaM75\ImageOptimizer\Converters\Webm;
 use AmirRezaM75\ImageOptimizer\Optimizers\Gifsicle;
 use InvalidArgumentException;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Image
 {
     protected $imagePath;
+    private $lastFrameDelay = 1.0;
 
     public function __construct($imagePath)
     {
@@ -47,6 +49,20 @@ class Image
 
         $optimizer->setImagePath($imagePath);
 
+        if ($optimizer instanceof Gifsicle) {
+            $infoCommand = Process::fromShellCommandline('"gifsicle" --info -i ' . $imagePath);
+            $infoCommand->run();
+
+            preg_match_all(
+                '/disposal asis delay ([0-9.]+)/',
+                $infoCommand->getOutput(),
+                $matches
+            );
+
+            if ( is_array($matches[1]) and ! empty($matches[1]) )
+                $this->lastFrameDelay = floatval(end($matches[1]));
+        }
+
 
         $process = Process::fromShellCommandline($optimizer->getCommand());
         $process->run();
@@ -77,13 +93,11 @@ class Image
     {
         // ['-r 16', '-vf fps="fps=8"', '-auto-alt-ref 0']
         // ['-crf 50', '-b:v 0']
-        return $this->convert(new Webm([
-            '-c:v libvpx-vp9',
-            '-vsync cfr',
-            '-qmin 30',
-            '-qmax 50',
-            '-an'
-        ]));
+        $webmOptions = $this->lastFrameDelay > 1
+            ? ['-c:v libvpx-vp9', '-vsync cfr', '-qmin 30', '-qmax 50', '-an']
+            : ['-c:v libvpx-vp9', '-an'];
+
+        return $this->convert(new Webm($webmOptions));
     }
 
     private function getOptimizer()

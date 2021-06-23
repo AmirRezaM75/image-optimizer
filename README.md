@@ -102,9 +102,11 @@ so the overall video quality will be more consistent
 - **cfr** Frames will be duplicated and dropped to achieve exactly the requested constant frame rate.
 
 #### Installation
-``sudo apt-get install ffmpeg``
+Install the latest version of ffmpeg:
+``sudo snap install ffmpeg``
+since v4 uses ``libavcodec 58. 91.100`` and it's what we need
 
 ``sudo apt-get install libvpx5``
 
 Make sure libvpx is installed:
-``ffmpeg -version | grep libvpx`` 
+``ffmpeg -version | grep libvpx``
