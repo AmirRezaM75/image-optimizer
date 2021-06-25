@@ -36,7 +36,6 @@ create a class that implements ``AmirRezaM75\ImageOptimizer\Converter`` interfac
 ## Optimization tools
 
 ### Gifsicle
-In order to compress gif files, you need to install [Gifsicle](https://github.com/kohler/gifsicle) v1.92+
 
 #### [Options](http://www.lcdf.org/gifsicle/man.html)
 ``--batch, -b`` Modify each GIF input in place by reading and writing to the same filename. (GIFs read from the standard input are written to the standard output.)
@@ -60,6 +59,10 @@ Determine how a smaller colormap is chosen.
 - ‘**median-cut**’ is the median cut algorithm described by Heckbert.
 
 #### Installation
+In order to compress gif files, you need to install Gifsicle v1.92+
+
+Download latest version from [Gifsicle github repository](https://github.com/kohler/gifsicle), extract zip and run following command:
+
 ``./bootstrap.sh`` or ``autoreconf -i``
 
 ``make install``
