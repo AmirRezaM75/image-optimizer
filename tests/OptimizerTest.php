@@ -21,20 +21,20 @@ class OptimizerTest extends TestCase
     public function it_can_set_binary_path()
     {
         $optimizer = (new Gifsicle())
-            ->setBinaryPath('binary-path')
+            ->setBinaryPath('snap/bin')
             ->setImagePath('image.gif');
 
         $this->assertEquals(
-            "\"binary-path/gifsicle\"  -i 'image.gif' -o 'image.gif'",
+            "\"snap/bin/gifsicle\"  -i 'image.gif' -o 'image.gif'",
             $optimizer->getCommand()
         );
 
         $optimizer = (new Gifsicle())
-            ->setBinaryPath('binary-path/')
+            ->setBinaryPath('snap/bin/')
             ->setImagePath('image.gif');
 
         $this->assertEquals(
-            "\"binary-path/gifsicle\"  -i 'image.gif' -o 'image.gif'",
+            "\"snap/bin/gifsicle\"  -i 'image.gif' -o 'image.gif'",
             $optimizer->getCommand()
         );
 
@@ -68,5 +68,15 @@ class OptimizerTest extends TestCase
 
         $this->assertTrue($gifsicle->canHandle($gif));
         $this->assertFalse($gifsicle->canHandle($jpeg));
+    }
+
+    /** @test */
+    public function it_can_detect_last_frame_delay()
+    {
+        $delay = (new Gifsicle)
+            ->setImagePath($this->getMediaPath('animated.gif'))
+            ->getLastFrameDelay();
+
+        $this->assertEquals(0.1, $delay);
     }
 }

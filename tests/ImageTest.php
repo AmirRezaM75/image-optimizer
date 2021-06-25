@@ -91,8 +91,12 @@ class ImageTest extends TestCase
     {
         $tempFilePath = $this->getTempPath('animated.gif');
 
-        (new Image($tempFilePath))
+        $output = (new Image($tempFilePath))
             ->optimize()
             ->convertToWebm();
+
+        $this->assertFileExists($output);
+
+        $this->assertTrue( filesize($output) < filesize($tempFilePath) );
     }
 }

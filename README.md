@@ -101,12 +101,20 @@ so the overall video quality will be more consistent
 ``-vsync parameter`` Video sync method. For compatibility reasons old values can be specified as numbers. Newly added values will have to be specified as strings always.
 - **cfr** Frames will be duplicated and dropped to achieve exactly the requested constant frame rate.
 
+> This option is necessary if you wanna fix disposal asis delay on last frame [issue](https://trac.ffmpeg.org/ticket/3052)
+
+
 #### Installation
-Install the latest version of ffmpeg:
-``sudo snap install ffmpeg``
-since v4 uses ``libavcodec 58. 91.100`` and it's what we need
+Install the latest version of ffmpeg.
+
+``sudo add-apt-repository ppa:savoury1/ffmpeg4``
+
+> We need **v4+** since it uses ``libavcodec 58. 91.100`` encoder, and that's what we need
+
+``sudo apt-get update``
+
+``sudo apt-get install ffmpeg``
 
 ``sudo apt-get install libvpx5``
 
-Make sure libvpx is installed:
-``ffmpeg -version | grep libvpx``
+> Duo to file location permission, I recommend to don't install it via snap

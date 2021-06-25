@@ -5,13 +5,12 @@ namespace AmirRezaM75\ImageOptimizer;
 use AmirRezaM75\ImageOptimizer\Converters\Webm;
 use AmirRezaM75\ImageOptimizer\Optimizers\Gifsicle;
 use InvalidArgumentException;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Image
 {
     protected $imagePath;
-    private $lastFrameDelay = 1.0;
+    protected $lastFrameDelay = 1.0;
 
     public function __construct($imagePath)
     {
@@ -49,19 +48,8 @@ class Image
 
         $optimizer->setImagePath($imagePath);
 
-        if ($optimizer instanceof Gifsicle) {
-            $infoCommand = Process::fromShellCommandline('"gifsicle" --info -i ' . $imagePath);
-            $infoCommand->run();
-
-            preg_match_all(
-                '/disposal asis delay ([0-9.]+)/',
-                $infoCommand->getOutput(),
-                $matches
-            );
-
-            if ( is_array($matches[1]) and ! empty($matches[1]) )
-                $this->lastFrameDelay = floatval(end($matches[1]));
-        }
+        if (method_exists($optimizer, 'getLastFrameDelay'))
+            $this->lastFrameDelay = $optimizer->getLastFrameDelay();
 
 
         $process = Process::fromShellCommandline($optimizer->getCommand());
@@ -81,23 +69,20 @@ class Image
     }
 
     /**
-     * To install FFmpeg with support for libvpx-vp9,
-     * look at the Compilation Guides and compile FFmpeg with the --enable-libvpx option.
      * libvpx-vp9 shorthand is vp9
      * @see https://trac.ffmpeg.org/wiki/Encode/VP9
-     * Disposal asis delay on last frame issue
-     * @see https://trac.ffmpeg.org/ticket/6302
-     * @see https://trac.ffmpeg.org/ticket/3052
      */
     public function convertToWebm()
     {
         // ['-r 16', '-vf fps="fps=8"', '-auto-alt-ref 0']
         // ['-crf 50', '-b:v 0']
-        $webmOptions = $this->lastFrameDelay > 1
-            ? ['-c:v libvpx-vp9', '-vsync cfr', '-qmin 30', '-qmax 50', '-an']
-            : ['-c:v libvpx-vp9', '-an'];
 
-        return $this->convert(new Webm($webmOptions));
+        $options = ['-c:v libvpx-vp9', '-an'];
+
+        if ($this->lastFrameDelay > .5)
+            array_push($options, ['-vsync cfr', '-qmin 30', '-qmax 50']);
+
+        return $this->convert(new Webm($options));
     }
 
     private function getOptimizer()

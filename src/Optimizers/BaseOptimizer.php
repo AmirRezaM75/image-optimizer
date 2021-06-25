@@ -33,6 +33,12 @@ abstract class BaseOptimizer implements Optimizer
         return $this;
     }
 
+    /**
+     * Use it when you wanna call binary file which is located somewhere else.
+     * Like snap packages which are located at '/usr/snap' instead of '/usr/bin'
+     * @param string $binaryPath
+     * @return self
+    */
     public function setBinaryPath($binaryPath)
     {
         if ( ! empty($binaryPath) and substr($binaryPath, -1) !== DIRECTORY_SEPARATOR )
