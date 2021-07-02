@@ -61,12 +61,17 @@ Determine how a smaller colormap is chosen.
 #### Installation
 In order to compress gif files, you need to install Gifsicle v1.92+
 
-Download latest version from [Gifsicle github repository](https://github.com/kohler/gifsicle), extract zip and run following command:
+``git clone https://github.com/kohler/gifsicle``
+
+``apt install automake make gcc build-essential``
 
 ``./bootstrap.sh`` or ``autoreconf -i``
 
-``make install``
+``./configure``
 
+``make``
+
+``make install``
 
 ## Converter tools
 
