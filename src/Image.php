@@ -79,7 +79,7 @@ class Image
 
         $options = ['-c:v libvpx-vp9', '-an'];
 
-        if ($this->lastFrameDelay > .5)
+        if ($this->lastFrameDelay > .7)
             $options = array_merge($options, ['-vsync cfr', '-qmin 30', '-qmax 50']);
 
         return $this->convert(new Webm($options));
