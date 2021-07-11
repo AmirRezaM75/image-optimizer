@@ -58,6 +58,7 @@ class Image
         $converter->setImagePath($this->path());
 
         $process = Process::fromShellCommandline($converter->getCommand());
+        $process->setTimeout(240);
         $process->run();
 
         return $converter->getOutputPath();
