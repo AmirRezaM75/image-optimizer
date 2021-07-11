@@ -10,7 +10,6 @@ use Symfony\Component\Process\Process;
 class Image
 {
     protected $imagePath;
-    protected $lastFrameDelay = 1.0;
 
     public function __construct($imagePath)
     {
@@ -48,10 +47,6 @@ class Image
 
         $optimizer->setImagePath($imagePath);
 
-        if (method_exists($optimizer, 'getLastFrameDelay'))
-            $this->lastFrameDelay = $optimizer->getLastFrameDelay();
-
-
         $process = Process::fromShellCommandline($optimizer->getCommand());
         $process->run();
 
@@ -77,12 +72,13 @@ class Image
         // ['-r 16', '-vf fps="fps=8"', '-auto-alt-ref 0']
         // ['-crf 50', '-b:v 0']
 
-        $options = ['-c:v libvpx-vp9', '-an'];
-
-        if ($this->lastFrameDelay > .7)
-            $options = array_merge($options, ['-vsync cfr', '-qmin 30', '-qmax 50']);
-
-        return $this->convert(new Webm($options));
+        return $this->convert(new Webm([
+            '-c:v libvpx-vp9',
+            '-an',
+            '-vsync cfr',
+            '-qmin 30',
+            '-qmax 50'
+        ]));
     }
 
     private function getOptimizer()
